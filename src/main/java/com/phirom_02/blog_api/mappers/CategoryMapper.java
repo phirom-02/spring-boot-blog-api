@@ -1,6 +1,7 @@
 package com.phirom_02.blog_api.mappers;
 
 import com.phirom_02.blog_api.domain.PostStatus;
+import com.phirom_02.blog_api.domain.dtos.CreateCategoryPayload;
 import com.phirom_02.blog_api.domain.dtos.ResponseCategoryDto;
 import com.phirom_02.blog_api.domain.entities.Category;
 import com.phirom_02.blog_api.domain.entities.Post;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CategoryMapper {
+
+    Category toEntity(CreateCategoryPayload createCategoryPayload);
 
     @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
     ResponseCategoryDto toResponseCategoryDto(Category category);
