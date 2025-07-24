@@ -1,38 +1,42 @@
 package com.phirom_02.blog_api.domain.entities;
 
+import com.phirom_02.blog_api.domain.PostStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "posts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class User {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
 
     @Column(nullable = false)
-    private String password;
+    @Enumerated(EnumType.STRING)
+    private PostStatus status;
 
     @Column(nullable = false)
-    private String name;
+    private Integer readingTime;
 
-    @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
     @Column(nullable = false)
     private Instant createdAt;
@@ -44,13 +48,13 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(createdAt, user.createdAt) && Objects.equals(updatedAt, user.updatedAt);
+        Post post = (Post) o;
+        return Objects.equals(id, post.id) && Objects.equals(title, post.title) && Objects.equals(content, post.content) && status == post.status && Objects.equals(readingTime, post.readingTime) && Objects.equals(createdAt, post.createdAt) && Objects.equals(updatedAt, post.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, name, createdAt, updatedAt);
+        return Objects.hash(id, title, content, status, readingTime, createdAt, updatedAt);
     }
 
     @PrePersist
