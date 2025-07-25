@@ -1,10 +1,16 @@
 package com.phirom_02.blog_api.controllers;
 
+import com.phirom_02.blog_api.domain.dtos.CreatePostDto;
+import com.phirom_02.blog_api.domain.dtos.CreatePostPayload;
 import com.phirom_02.blog_api.domain.dtos.PostResponse;
 import com.phirom_02.blog_api.domain.entities.Post;
+import com.phirom_02.blog_api.domain.entities.User;
 import com.phirom_02.blog_api.mappers.PostMapper;
 import com.phirom_02.blog_api.service.PostService;
+import com.phirom_02.blog_api.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +23,7 @@ import java.util.UUID;
 public class PostController {
 
     private final PostService postService;
+    private final UserService userService;
     private final PostMapper postMapper;
 
     @GetMapping
@@ -40,5 +47,18 @@ public class PostController {
                 .toList();
 
         return ResponseEntity.ok(postResponses);
+    }
+
+    @PostMapping
+    public ResponseEntity<PostResponse> createPost(
+            @RequestBody @Valid CreatePostPayload payload,
+            @RequestAttribute UUID userId
+    ) {
+        User user = userService.findUserById(userId);
+        CreatePostDto dto = postMapper.toCreatePostDto(payload);
+        Post post = postService.createPost(user, dto);
+        PostResponse postResponse = postMapper.toPostResponse(post);
+
+        return new ResponseEntity<>(postResponse, HttpStatus.CREATED);
     }
 }
