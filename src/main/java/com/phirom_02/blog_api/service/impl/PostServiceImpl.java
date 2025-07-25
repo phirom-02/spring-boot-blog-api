@@ -4,10 +4,12 @@ import com.phirom_02.blog_api.domain.PostStatus;
 import com.phirom_02.blog_api.domain.entities.Category;
 import com.phirom_02.blog_api.domain.entities.Post;
 import com.phirom_02.blog_api.domain.entities.Tag;
+import com.phirom_02.blog_api.domain.entities.User;
 import com.phirom_02.blog_api.repository.PostRepository;
 import com.phirom_02.blog_api.service.CategoryService;
 import com.phirom_02.blog_api.service.PostService;
 import com.phirom_02.blog_api.service.TagService;
+import com.phirom_02.blog_api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final UserService userService;
     private final CategoryService categoryService;
     private final TagService tagService;
 
@@ -52,5 +55,11 @@ public class PostServiceImpl implements PostService {
         }
 
         return postRepository.findAllByStatus(PostStatus.PUBLISHED);
+    }
+
+    @Override
+    public List<Post> getAllDraftedPosts(UUID userId) {
+        User author = userService.findUserById(userId);
+        return postRepository.findAllByAuthorAndStatus(author, PostStatus.DRAFT);
     }
 }

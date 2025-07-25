@@ -6,10 +6,7 @@ import com.phirom_02.blog_api.mappers.PostMapper;
 import com.phirom_02.blog_api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +26,16 @@ public class PostController {
     ) {
         List<Post> posts = postService.getAllPosts(categoryId, tagId);
         List<PostResponse> postResponses = posts.stream()
+                .map(postMapper::toPostResponse)
+                .toList();
+
+        return ResponseEntity.ok(postResponses);
+    }
+
+    @GetMapping(path = "/drafts")
+    public ResponseEntity<List<PostResponse>> getAllDraftedPosts(@RequestAttribute UUID userId) {
+        List<Post> draftedPostsposts = postService.getAllDraftedPosts(userId);
+        List<PostResponse> postResponses = draftedPostsposts.stream()
                 .map(postMapper::toPostResponse)
                 .toList();
 

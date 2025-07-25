@@ -4,6 +4,7 @@ import com.phirom_02.blog_api.domain.PostStatus;
 import com.phirom_02.blog_api.domain.entities.Category;
 import com.phirom_02.blog_api.domain.entities.Post;
 import com.phirom_02.blog_api.domain.entities.Tag;
+import com.phirom_02.blog_api.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +21,6 @@ public interface PostRepository extends JpaRepository<Post, UUID> {
     List<Post> findAllByStatusAndTagsContaining(PostStatus status, Tag tag);
 
     List<Post> findAllByStatus(PostStatus status);
+
+    List<Post> findAllByAuthorAndStatus(User author, PostStatus status);
 }
