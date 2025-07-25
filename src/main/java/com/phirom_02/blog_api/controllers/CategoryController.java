@@ -1,7 +1,7 @@
 package com.phirom_02.blog_api.controllers;
 
 import com.phirom_02.blog_api.domain.dtos.CreateCategoryPayload;
-import com.phirom_02.blog_api.domain.dtos.ResponseCategoryDto;
+import com.phirom_02.blog_api.domain.dtos.ResponseCategory;
 import com.phirom_02.blog_api.domain.entities.Category;
 import com.phirom_02.blog_api.mappers.CategoryMapper;
 import com.phirom_02.blog_api.service.CategoryService;
@@ -22,20 +22,20 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @GetMapping
-    public ResponseEntity<List<ResponseCategoryDto>> getCategories() {
-        List<ResponseCategoryDto> categories = categoryService.getCategories()
+    public ResponseEntity<List<ResponseCategory>> getCategories() {
+        List<ResponseCategory> categories = categoryService.getCategories()
                 .stream().map(categoryMapper::toResponseCategoryDto).toList();
         return ResponseEntity.ok(categories);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseCategoryDto> createCategory(@RequestBody @Valid CreateCategoryPayload payload) {
+    public ResponseEntity<ResponseCategory> createCategory(@RequestBody @Valid CreateCategoryPayload payload) {
         Category categoryToCreate = categoryMapper.toEntity(payload);
         Category createdCategory = categoryService.createCategory(categoryToCreate);
-        ResponseCategoryDto responseCategoryDto = categoryMapper.toResponseCategoryDto(createdCategory);
+        ResponseCategory responseCategory = categoryMapper.toResponseCategoryDto(createdCategory);
 
         return new ResponseEntity<>(
-                responseCategoryDto,
+                responseCategory,
                 HttpStatus.CREATED
         );
     }

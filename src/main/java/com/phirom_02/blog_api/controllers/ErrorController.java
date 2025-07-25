@@ -2,9 +2,9 @@ package com.phirom_02.blog_api.controllers;
 
 import com.phirom_02.blog_api.domain.dtos.ApiErrorResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -60,12 +60,12 @@ public class ErrorController {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ApiErrorResponse> handleBadRequestException(BadRequestException e) {
-        log.error("BadRequestException occurred", e);
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiErrorResponse> handleBadRequestException(BadCredentialsException e) {
+        log.error("BadCredentialsException occurred", e);
         ApiErrorResponse error = ApiErrorResponse.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
-                .message("Incorrect username or password")
+                .message("Incorrect email or password")
                 .build();
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
