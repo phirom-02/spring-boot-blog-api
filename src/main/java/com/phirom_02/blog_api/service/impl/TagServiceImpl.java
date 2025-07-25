@@ -51,7 +51,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<Tag> getTagsByIds(Set<UUID> ids) {
-        return tagRepository.findAllByIdContaining(ids);
+        return tagRepository.findAllByIdIn(ids);
     }
 
     @Override

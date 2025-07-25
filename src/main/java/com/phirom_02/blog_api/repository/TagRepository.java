@@ -17,5 +17,6 @@ public interface TagRepository extends JpaRepository<Tag, UUID> {
 
     List<Tag> findAllByNameIn(Set<String> names);
 
-    List<Tag> findAllByIdContaining(Set<UUID> ids);
+    //    List<Tag> findAllBy(Set<UUID> ids);
+    List<Tag> findAllByIdIn(Set<UUID> ids);
 }

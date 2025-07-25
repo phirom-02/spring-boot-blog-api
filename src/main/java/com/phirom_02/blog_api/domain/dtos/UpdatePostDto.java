@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,15 +14,18 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostResponse {
+public class UpdatePostDto {
+
     private UUID id;
+
     private String title;
+
     private String content;
-    private PostAuthor author;
-    private CategoryResponse category;
-    private Set<TagResponse> tags;
-    private int readingTime;
+
+    private UUID categoryId;
+
+    @Builder.Default
+    private Set<UUID> tagIds = new HashSet<>();
+
     private PostStatus status;
-    private Instant createdAt;
-    private Instant updatedAt;
 }

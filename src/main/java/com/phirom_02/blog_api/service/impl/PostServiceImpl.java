@@ -2,6 +2,7 @@ package com.phirom_02.blog_api.service.impl;
 
 import com.phirom_02.blog_api.domain.PostStatus;
 import com.phirom_02.blog_api.domain.dtos.CreatePostDto;
+import com.phirom_02.blog_api.domain.dtos.UpdatePostDto;
 import com.phirom_02.blog_api.domain.entities.Category;
 import com.phirom_02.blog_api.domain.entities.Post;
 import com.phirom_02.blog_api.domain.entities.Tag;
@@ -11,6 +12,7 @@ import com.phirom_02.blog_api.service.CategoryService;
 import com.phirom_02.blog_api.service.PostService;
 import com.phirom_02.blog_api.service.TagService;
 import com.phirom_02.blog_api.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +72,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Post getPostById(UUID postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + postId));
+    }
+
+    @Override
     public Post createPost(User user, CreatePostDto createPostDto) {
         Post post = new Post();
         post.setTitle(createPostDto.getTitle());
@@ -85,6 +94,42 @@ public class PostServiceImpl implements PostService {
         post.setTags(new HashSet<>(tags));
 
         return postRepository.save(post);
+    }
+
+    @Override
+    public Post updatePost(UUID id, UpdatePostDto dto) {
+        Post existingPost = postRepository.findById(dto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("No"));
+
+        existingPost.setId(dto.getId());
+        existingPost.setTitle(dto.getTitle());
+        existingPost.setContent(dto.getContent());
+        existingPost.setStatus(PostStatus.PUBLISHED);
+        existingPost.setReadingTime(calculateReadingTime(dto.getContent()));
+
+        UUID newPostCategoryId = dto.getCategoryId();
+        if (!existingPost.getCategory().equals(newPostCategoryId)) {
+            Category newCategory = categoryService.getCategoryById(newPostCategoryId);
+            existingPost.setCategory(newCategory);
+        }
+
+        Set<UUID> existingTagIds = existingPost.getTags()
+                .stream()
+                .map(Tag::getId)
+                .collect(Collectors.toSet());
+        Set<UUID> newPostTagIds = dto.getTagIds();
+        if (!existingTagIds.equals(existingTagIds)) {
+            List<Tag> newTags = tagService.getTagsByIds(existingTagIds);
+            existingPost.setTags(new HashSet<>(newTags));
+        }
+
+        return postRepository.save(null);
+    }
+
+    @Override
+    public void deletePost(UUID id) {
+        getPostById(id);
+        postRepository.deleteById(id);
     }
 
     private int calculateReadingTime(String content) {

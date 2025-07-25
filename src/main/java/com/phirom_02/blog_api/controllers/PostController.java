@@ -1,8 +1,6 @@
 package com.phirom_02.blog_api.controllers;
 
-import com.phirom_02.blog_api.domain.dtos.CreatePostDto;
-import com.phirom_02.blog_api.domain.dtos.CreatePostPayload;
-import com.phirom_02.blog_api.domain.dtos.PostResponse;
+import com.phirom_02.blog_api.domain.dtos.*;
 import com.phirom_02.blog_api.domain.entities.Post;
 import com.phirom_02.blog_api.domain.entities.User;
 import com.phirom_02.blog_api.mappers.PostMapper;
@@ -49,6 +47,14 @@ public class PostController {
         return ResponseEntity.ok(postResponses);
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<PostResponse> getPostById(@PathVariable UUID id) {
+        Post post = postService.getPostById(id);
+        PostResponse postResponse = postMapper.toPostResponse(post);
+
+        return ResponseEntity.ok(postResponse);
+    }
+
     @PostMapping
     public ResponseEntity<PostResponse> createPost(
             @RequestBody @Valid CreatePostPayload payload,
@@ -60,5 +66,23 @@ public class PostController {
         PostResponse postResponse = postMapper.toPostResponse(post);
 
         return new ResponseEntity<>(postResponse, HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<PostResponse> updatePost(
+            @PathVariable UUID id,
+            @RequestBody @Valid UpdatePostPayload payload
+    ) {
+        UpdatePostDto dto = postMapper.toUpdatePostDto(payload);
+        Post post = postService.updatePost(id, dto);
+        PostResponse postResponse = postMapper.toPostResponse(post);
+
+        return ResponseEntity.ok(postResponse);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable UUID id) {
+        postService.deletePost(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
