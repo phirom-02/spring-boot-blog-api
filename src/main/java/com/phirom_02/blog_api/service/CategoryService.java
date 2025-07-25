@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface CategoryService {
 
-    List<Category> getCategories();
+    List<Category> getAllCategories();
 
     Category createCategory(Category categoryToCreate);
 

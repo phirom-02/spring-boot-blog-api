@@ -1,10 +1,10 @@
 package com.phirom_02.blog_api.mappers;
 
 import com.phirom_02.blog_api.domain.PostStatus;
-import com.phirom_02.blog_api.domain.dtos.CategoryResponse;
-import com.phirom_02.blog_api.domain.dtos.CreateCategoryPayload;
-import com.phirom_02.blog_api.domain.entities.Category;
+import com.phirom_02.blog_api.domain.dtos.CreateTagPayload;
+import com.phirom_02.blog_api.domain.dtos.TagResponse;
 import com.phirom_02.blog_api.domain.entities.Post;
+import com.phirom_02.blog_api.domain.entities.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -13,12 +13,12 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface CategoryMapper {
+public interface TagMapper {
 
-    Category toEntity(CreateCategoryPayload createCategoryPayload);
+    Tag toEntity(CreateTagPayload createTagPayload);
 
     @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
-    CategoryResponse toResponseCategory(Category category);
+    TagResponse toResponseTag(Tag tag);
 
     @Named("calculatePostCount")
     default long calculatePostCount(List<Post> posts) {
