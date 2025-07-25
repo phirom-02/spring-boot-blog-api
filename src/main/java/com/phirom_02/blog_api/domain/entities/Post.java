@@ -10,7 +10,9 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "posts", indexes = {
+        @Index(name = "idx_post_status", columnList = "status")
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -1,7 +1,6 @@
 package com.phirom_02.blog_api.mappers;
 
 import com.phirom_02.blog_api.domain.PostStatus;
-import com.phirom_02.blog_api.domain.dtos.CreateTagPayload;
 import com.phirom_02.blog_api.domain.dtos.TagResponse;
 import com.phirom_02.blog_api.domain.entities.Post;
 import com.phirom_02.blog_api.domain.entities.Tag;
@@ -14,8 +13,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TagMapper {
-
-    Tag toEntity(CreateTagPayload createTagPayload);
 
     @Mapping(target = "postCount", source = "posts", qualifiedByName = "calculatePostCount")
     TagResponse toResponseTag(Tag tag);

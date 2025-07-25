@@ -31,7 +31,7 @@ public class TagController {
 
     @PostMapping
     public ResponseEntity<List<TagResponse>> createTag(@RequestBody @Valid CreateTagPayload payload) {
-        List<Tag> createdTags = tagService.createTags(payload.getName());
+        List<Tag> createdTags = tagService.createTags(payload.getNames());
         List<TagResponse> createdTagsResponse = createdTags.stream()
                 .map(tagMapper::toResponseTag)
                 .toList();

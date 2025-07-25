@@ -3,9 +3,9 @@ package com.phirom_02.blog_api.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +25,7 @@ public class Tag {
     private String name;
 
     @ManyToMany(mappedBy = "tags")
-    private Set<Post> posts = new HashSet<>();
+    private List<Post> posts = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

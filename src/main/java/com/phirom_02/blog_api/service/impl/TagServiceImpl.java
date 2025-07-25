@@ -3,11 +3,15 @@ package com.phirom_02.blog_api.service.impl;
 import com.phirom_02.blog_api.domain.entities.Tag;
 import com.phirom_02.blog_api.repository.TagRepository;
 import com.phirom_02.blog_api.service.TagService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +37,7 @@ public class TagServiceImpl implements TagService {
                 .filter(name -> !existingTagNames.contains(name))
                 .map(name -> Tag.builder()
                         .name(name)
-                        .posts(new HashSet<>())
+                        .posts(new ArrayList<>())
                         .build())
                 .toList();
 
@@ -46,14 +50,19 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public Tag getTagById(UUID id) {
+        return tagRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
+    }
+
+    @Override
     @Transactional
     public void deleteTag(UUID id) {
-        Optional<Tag> tag = tagRepository.findById(id);
-        if (tag.isPresent()) {
-            if (tag.get().getPosts().size() > 0) {
+        tagRepository.findById(id).ifPresent(tag -> {
+            if (!tag.getPosts().isEmpty()) {
                 throw new IllegalStateException("There are posts associated with tag: " + id);
             }
-        }
+        });
         tagRepository.deleteById(id);
     }
 }

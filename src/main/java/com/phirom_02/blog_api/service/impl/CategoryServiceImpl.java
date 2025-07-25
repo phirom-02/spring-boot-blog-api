@@ -3,6 +3,7 @@ package com.phirom_02.blog_api.service.impl;
 import com.phirom_02.blog_api.domain.entities.Category;
 import com.phirom_02.blog_api.repository.CategoryRepository;
 import com.phirom_02.blog_api.service.CategoryService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getAllCategories() {
         return categoryRepository.findAllWithPostCount();
+    }
+
+    @Override
+    public Category getCategoryById(UUID id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
     }
 
     @Override
