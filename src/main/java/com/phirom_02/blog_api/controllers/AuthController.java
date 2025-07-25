@@ -2,6 +2,9 @@ package com.phirom_02.blog_api.controllers;
 
 import com.phirom_02.blog_api.domain.dtos.AuthResponse;
 import com.phirom_02.blog_api.domain.dtos.LoginRequest;
+import com.phirom_02.blog_api.domain.dtos.SignUpDto;
+import com.phirom_02.blog_api.domain.dtos.SignUpPayload;
+import com.phirom_02.blog_api.mappers.AuthMapper;
 import com.phirom_02.blog_api.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final AuthMapper authMapper;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
@@ -36,6 +40,10 @@ public class AuthController {
         return ResponseEntity.ok(authResponse);
     }
 
-//    @PostMapping("/sign-up")
-//    public ResponseEntity<UserDetails> signUp(@RequestBody @Valid Object )
+    @PostMapping("/sign-up")
+    public ResponseEntity<UserDetails> signUp(@RequestBody @Valid SignUpPayload payload) {
+        SignUpDto dto = authMapper.toSignUpDto(payload);
+        UserDetails userDetails = authService.register(dto);
+        return ResponseEntity.ok(userDetails);
+    }
 }
