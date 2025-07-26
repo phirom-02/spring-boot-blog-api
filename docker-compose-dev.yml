@@ -1,0 +1,24 @@
+services:
+  blog-api-db:
+    image: postgres:latest           # Use the official latest PostgreSQL image
+    container_name: blog-api-db
+    restart: always                  # Always restart the container if it stops
+    environment:
+      POSTGRES_PASSWORD: changemeinprod!  # Set the database superuser password (change before production)
+
+  app:
+    build: .                        # Build Docker image from local Dockerfile
+    container_name: blog-api        # Name the container "blog-api"
+    ports:
+      - "8080:8080"    # Map container port 8080 to host port 8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://blog-api-db:5432/postgres  # DB URL using service name and port
+      SPRING_DATASOURCE_USERNAME: postgres    # Database username
+      SPRING_DATASOURCE_PASSWORD: changemeinprod!  # Database password (match the one above)
+    depends_on:
+      - blog-api-db                          # Ensure database service starts before app
+    restart: unless-stopped         # Restart app unless manually stopped
+
+volumes:
+  postgres_data:
+    driver: local                   # Named Docker volume for persistent DB storage
