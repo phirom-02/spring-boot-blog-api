@@ -4,7 +4,7 @@ spring:
 
   # Database Connection
   datasource:
-    url: jdbc:postgresql://localhost:5431/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: changemeinprod!
 

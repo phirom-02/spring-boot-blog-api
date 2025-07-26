@@ -8,10 +8,3 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: changemeinprod!
-
-  # Database management interface
-  adminer:
-    image: adminer:latest
-    restart: always
-    ports:
-      - 6000:8080
