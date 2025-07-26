@@ -77,10 +77,69 @@ src/
 
 ## Setup & Installation
 
+### Prerequisites
+
+- Java 21 JDK installed (if running locally)
+- Apache Maven installed (to build the project)
+- Docker and Docker Compose installed (for containerized setup)
+- PostgreSQL (optional if running locally without Docker)
+
+### Local Setup (Without Docker)
+
+1. **Clone the repository:**
+
+```bash
+  git clone https://github.com/yourusername/blog-api.git
+  cd blog-api
+```
+
+2. **Build the project using Maven:**
+
+```bash
+  mvn clean package
+```
+
+3. **Configure the database connection:**
+
+Edit `src/main/resources/application.yml` or set environment variables to point to your PostgreSQL database.
+
+4. **Run the application:**
+
+```bash
+  java -jar target/{built-file-name}.jar
+```
+
+5. **Access the API**
+
+   Open your browser at `http://localhost:{server-port}/swagger-ui.html` to explore API docs.
+
+### Running with Docker Compose
+
+1. **Clone the repository and navigate into it:**
+
+```bash
+  git clone https://github.com/yourusername/blog-api.git
+  cd blog-api
+```
+
+2. **Build and start the services:**
+
+```bash
+  docker-compose up --build
+```
+
+3. **Access the API:**
+   Once the containers are running, visit http://localhost:8080/swagger-ui.html to use the API.
+
+### Notes
+
+- The default PostgreSQL password is changemeinprod!. Change this in docker-compose.yml before production use.
+- The database port is mapped to 5431 on the host to avoid conflicts with existing PostgreSQL instances.
+- Data persistence requires enabling volumes in the docker-compose.yml (see Docker Compose Setup).
+
 ## API Documentation
 
 This project uses **Swagger UI** for auto-generated, interactive API documentation.
-
 After running the project, you can access the docs at:
 
 ## To-dos
@@ -98,10 +157,10 @@ After running the project, you can access the docs at:
 - [ ] **Improve documentation**
     - [ ] Add Swagger/OpenAPI annotations
     - [ ] Document code (JavaDocs where needed)
-    - [ ] Provide Clear **Setup & Installation** instructions in **README** 
+    - [ ] Provide Clear **Setup & Installation** instructions in **README**
 
 - [ ] **Usability & Accessibility**
-  - [ ] Reconfigure Docker and Docker Compose for cross-machine consistency
+    - [ ] Reconfigure Docker and Docker Compose for cross-machine consistency
 
 ## History
 
