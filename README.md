@@ -159,8 +159,8 @@ After running the project, you can access the docs at:
     - [ ] Document code (JavaDocs where needed)
     - [ ] Provide Clear **Setup & Installation** instructions in **README**
 
-- [ ] **Usability & Accessibility**
-    - [ ] Reconfigure Docker and Docker Compose for cross-machine consistency
+- [x] **Usability & Accessibility**
+    - [x] Reconfigure Docker and Docker Compose for cross-machine consistency
 
 ## History
 
