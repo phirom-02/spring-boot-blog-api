@@ -89,7 +89,7 @@ src/
 1. **Clone the repository:**
 
 ```bash
-  git clone https://github.com/yourusername/blog-api.git
+  git clone https://github.com/phirom-02/spring-boot-blog-api
   cd blog-api
 ```
 
@@ -118,7 +118,7 @@ Edit `src/main/resources/application.yml` or set environment variables to point 
 1. **Clone the repository and navigate into it:**
 
 ```bash
-  git clone https://github.com/yourusername/blog-api.git
+  git clone https://github.com/phirom-02/spring-boot-blog-api
   cd blog-api
 ```
 
