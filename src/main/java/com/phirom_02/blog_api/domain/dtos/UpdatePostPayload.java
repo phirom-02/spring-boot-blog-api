@@ -13,6 +13,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * DTO for updating an existing blog post.
+ * Used for capturing updated data while ensuring validation on input fields.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

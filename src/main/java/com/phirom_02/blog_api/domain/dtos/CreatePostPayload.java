@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * DTO for creating a new blog post with validation constraints.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * DTO representing an API error response.
+ */
 @Data
 @Builder
 @NoArgsConstructor

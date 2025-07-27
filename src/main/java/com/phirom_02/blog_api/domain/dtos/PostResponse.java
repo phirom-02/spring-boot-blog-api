@@ -10,6 +10,10 @@ import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * DTO representing the response data for a blog post.
+ * Contains all the details of a post to be returned in the response.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

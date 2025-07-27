@@ -146,6 +146,7 @@ After running the project, you can access the docs at:
 
 - [ ] **Enhance authentication**
     - [ ] Implement refresh tokens and token rotation
+    - [ ] Implement password strength validator 
     - [ ] Add logout and "logout all devices" features
     - [ ] Add account verification (e.g., email confirmation)
     - [ ] Implement RBAC (Role-Based Access Control)
@@ -156,8 +157,8 @@ After running the project, you can access the docs at:
 
 - [ ] **Improve documentation**
     - [ ] Add Swagger/OpenAPI annotations
-    - [ ] Document code (JavaDocs where needed)
-    - [ ] Provide Clear **Setup & Installation** instructions in **README**
+    - [x] Document code (JavaDocs where needed)
+    - [x] Provide Clear **Setup & Installation** instructions in **README**
 
 - [x] **Usability & Accessibility**
     - [x] Reconfigure Docker and Docker Compose for cross-machine consistency
