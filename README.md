@@ -122,10 +122,16 @@ Edit `src/main/resources/application.yml` or set environment variables to point 
   cd blog-api
 ```
 
-2. **Build and start the services:**
+2. **Make build script executable:**
 
 ```bash
-  docker-compose up --build
+  chmod +x ./scripts/runner.sh
+```
+
+3. **Build and start the services:**
+
+```bash
+  ./script/runner.sh
 ```
 
 3. **Access the API:**
@@ -146,7 +152,7 @@ After running the project, you can access the docs at:
 
 - [ ] **Enhance authentication**
     - [ ] Implement refresh tokens and token rotation
-    - [ ] Implement password strength validator 
+    - [ ] Implement password strength validator
     - [ ] Add logout and "logout all devices" features
     - [ ] Add account verification (e.g., email confirmation)
     - [ ] Implement RBAC (Role-Based Access Control)
@@ -155,8 +161,8 @@ After running the project, you can access the docs at:
     - [ ] Unit tests for services and utils
     - [ ] Integration tests for API endpoints
 
-- [ ] **Improve documentation**
-    - [ ] Add Swagger/OpenAPI annotations
+- [x] **Improve documentation**
+    - [x] Add Swagger/OpenAPI annotations
     - [x] Document code (JavaDocs where needed)
     - [x] Provide Clear **Setup & Installation** instructions in **README**
 

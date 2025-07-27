@@ -12,4 +12,4 @@ EXPOSE 8080
 
 # Define the default command to run when the container starts
 # It runs the Java application by executing the JAR file
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--spring.profiles.active=dev"]
