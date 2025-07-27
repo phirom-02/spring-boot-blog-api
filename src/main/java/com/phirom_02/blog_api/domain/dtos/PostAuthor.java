@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+/**
+ * DTO representing the author of a blog post.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

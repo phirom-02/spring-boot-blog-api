@@ -6,6 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO for user sign-up request with validation constraints.
+ * Contains the necessary fields for user registration and ensures input validity.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

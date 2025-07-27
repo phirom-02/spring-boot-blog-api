@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+/**
+ * DTO representing a tag in the response.
+ */
+
 @Data
 @Builder
 @NoArgsConstructor

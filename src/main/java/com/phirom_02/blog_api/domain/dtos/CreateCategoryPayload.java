@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO representing the payload for creating a new category.
+ */
 @Data
 @Builder
 @NoArgsConstructor

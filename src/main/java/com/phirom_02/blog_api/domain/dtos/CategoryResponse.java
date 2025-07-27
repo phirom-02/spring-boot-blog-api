@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+/**
+ * DTO representing a response containing category details.
+ */
 @Data
 @Builder
 @NoArgsConstructor

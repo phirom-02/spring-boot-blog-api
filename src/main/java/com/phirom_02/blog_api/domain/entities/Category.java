@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Entity representing a category in the blog application.
+ */
 @Entity
 @Table(name = "categories")
 @NoArgsConstructor

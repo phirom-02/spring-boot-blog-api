@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+/**
+ * DTO for creating a new tag with validation constraints.
+ */
+
 @Data
 @Builder
 @NoArgsConstructor

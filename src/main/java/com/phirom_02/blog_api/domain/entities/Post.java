@@ -9,6 +9,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Entity representing a blog post.
+ */
 @Entity
 @Table(name = "posts", indexes = {
         @Index(name = "idx_post_status", columnList = "status")

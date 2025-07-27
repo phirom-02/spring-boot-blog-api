@@ -10,6 +10,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * DTO for updating an existing blog post.
+ * This object is used to pass updated post data to the service layer for processing.
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
