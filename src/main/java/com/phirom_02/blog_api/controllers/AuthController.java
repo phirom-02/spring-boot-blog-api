@@ -6,6 +6,7 @@ import com.phirom_02.blog_api.domain.dtos.SignUpDto;
 import com.phirom_02.blog_api.domain.dtos.SignUpPayload;
 import com.phirom_02.blog_api.mappers.AuthMapper;
 import com.phirom_02.blog_api.service.AuthService;
+import com.phirom_02.blog_api.swagger.SwaggerTag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +16,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.phirom_02.blog_api.swagger.SwaggerTags.AUTH;
+
 /**
  * REST controller for handling authentication-related operations such as login and sign-up.
  */
 @RestController
 @RequestMapping(path = "/api/v1/auth")
 @RequiredArgsConstructor
+@SwaggerTag(
+        name = AUTH,
+        description = "Operations for managing authentications including login and sign-up"
+)
 public class AuthController {
 
     private final AuthService authService;

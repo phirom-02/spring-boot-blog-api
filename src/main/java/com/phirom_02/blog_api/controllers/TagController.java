@@ -5,6 +5,7 @@ import com.phirom_02.blog_api.domain.dtos.TagResponse;
 import com.phirom_02.blog_api.domain.entities.Tag;
 import com.phirom_02.blog_api.mappers.TagMapper;
 import com.phirom_02.blog_api.service.TagService;
+import com.phirom_02.blog_api.swagger.SwaggerTag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import static com.phirom_02.blog_api.swagger.SwaggerTags.POSTS;
+
 /**
  * REST controller for managing blog tags.
  */
 @RestController
 @RequestMapping(path = "/api/v1/tags")
 @RequiredArgsConstructor
+@SwaggerTag(
+        name = POSTS,
+        description = "Operations for managing blog tags including retrieval, creation, and deletion"
+)
 public class TagController {
 
     private final TagService tagService;

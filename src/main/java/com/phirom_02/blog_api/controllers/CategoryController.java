@@ -5,6 +5,7 @@ import com.phirom_02.blog_api.domain.dtos.CreateCategoryPayload;
 import com.phirom_02.blog_api.domain.entities.Category;
 import com.phirom_02.blog_api.mappers.CategoryMapper;
 import com.phirom_02.blog_api.service.CategoryService;
+import com.phirom_02.blog_api.swagger.SwaggerTag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import static com.phirom_02.blog_api.swagger.SwaggerTags.CATEGORIES;
+
 
 /**
  * REST controller for managing categories in the blog application.
@@ -21,6 +24,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/api/v1/categories")
 @RequiredArgsConstructor
+@SwaggerTag(
+        name = CATEGORIES,
+        description = "Operations for managing blog categories including retrieval, creation, and deletion"
+)
 public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;

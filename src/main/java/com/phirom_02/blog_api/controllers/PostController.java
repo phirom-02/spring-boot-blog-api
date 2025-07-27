@@ -6,6 +6,7 @@ import com.phirom_02.blog_api.domain.entities.User;
 import com.phirom_02.blog_api.mappers.PostMapper;
 import com.phirom_02.blog_api.service.PostService;
 import com.phirom_02.blog_api.service.UserService;
+import com.phirom_02.blog_api.swagger.SwaggerTag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import static com.phirom_02.blog_api.swagger.SwaggerTags.POSTS;
+
 
 /**
  * REST controller for managing blog posts.
@@ -22,6 +25,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping(path = "/api/v1/posts")
 @RequiredArgsConstructor
+@SwaggerTag(
+        name = POSTS,
+        description = "Operations for managing blog posts including retrieval, creation, modification, and deletion"
+)
 public class PostController {
 
     private final PostService postService;
