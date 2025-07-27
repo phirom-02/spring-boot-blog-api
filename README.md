@@ -140,7 +140,6 @@ Edit `src/main/resources/application.yml` or set environment variables to point 
 ### Notes
 
 - The default PostgreSQL password is changemeinprod!. Change this in docker-compose.yml before production use.
-- The database port is mapped to 5431 on the host to avoid conflicts with existing PostgreSQL instances.
 - Data persistence requires enabling volumes in the docker-compose.yml (see Docker Compose Setup).
 
 ## API Documentation
