@@ -1,17 +1,19 @@
 spring:
   # Database Connection
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: test
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5431/blog-api-test
+    username: postgres
+    password: changemeinprod!
 
   # JPA Configuration
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 jwt:
   access_token_expiration: 600000
