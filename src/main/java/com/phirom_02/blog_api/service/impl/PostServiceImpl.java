@@ -149,7 +149,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post updatePost(UUID id, UpdatePostDto dto) {
         // Find the existing post by ID
-        Post existingPost = postRepository.findById(dto.getId())
+        Post existingPost = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No"));
 
         // Update post properties
@@ -161,7 +161,7 @@ public class PostServiceImpl implements PostService {
 
         // Update the category of the post if it has changed
         UUID newPostCategoryId = dto.getCategoryId();
-        if (!existingPost.getCategory().equals(newPostCategoryId)) {
+        if (!existingPost.getCategory().getId().equals(newPostCategoryId)) {
             Category newCategory = categoryService.getCategoryById(newPostCategoryId);
             existingPost.setCategory(newCategory);
         }
@@ -172,13 +172,13 @@ public class PostServiceImpl implements PostService {
                 .map(Tag::getId)
                 .collect(Collectors.toSet());
         Set<UUID> newPostTagIds = dto.getTagIds();
-        if (!existingTagIds.equals(existingTagIds)) {
+        if (!existingTagIds.equals(newPostTagIds)) {
             List<Tag> newTags = tagService.getTagsByIds(existingTagIds);
             existingPost.setTags(new HashSet<>(newTags));
         }
 
         // Save and return the updated post
-        return postRepository.save(null);
+        return postRepository.save(existingPost);
     }
 
     /**
