@@ -24,6 +24,14 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
     List<Category> findAllWithPostCount();
 
     /**
+     * Find a category by name
+     *
+     * @param name category name
+     * @return a category matches the provided name
+     */
+    Category findByName(String name);
+
+    /**
      * Checks if a category with the given name exists, ignoring case.
      *
      * @param name the name of the category to check

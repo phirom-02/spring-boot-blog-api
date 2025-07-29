@@ -32,5 +32,19 @@ public interface TagRepository extends JpaRepository<Tag, UUID> {
      */
     List<Tag> findAllByNameIn(Set<String> names);
 
+    /**
+     * Finds tags by their ids
+     *
+     * @param ids a set of tag ids
+     * @return a list of tags with ids that match the given set
+     */
     List<Tag> findAllByIdIn(Set<UUID> ids);
+
+    /**
+     * Find name by name
+     *
+     * @param name tag's name
+     * @return a tag that matches the given name
+     */
+    Tag findByName(String name);
 }
