@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User createUser(CreateUserDto dto) {
+        // TODO: Throw duplication email
         User userToCreate = new User();
         userToCreate.setEmail(dto.getEmail());
         userToCreate.setPassword(dto.getPassword());
