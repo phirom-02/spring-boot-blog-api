@@ -148,9 +148,7 @@ public class PostServiceImpl implements PostService {
      */
     @Override
     public Post updatePost(UUID id, UpdatePostDto dto) {
-        // Find the existing post by ID
-        Post existingPost = postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No"));
+        Post existingPost = getPostById(id);
 
         // Update post properties
         existingPost.setId(dto.getId());
