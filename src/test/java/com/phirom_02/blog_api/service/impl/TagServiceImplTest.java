@@ -31,18 +31,15 @@ class TagServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        Tag tag1 = new Tag();
-        tag1.setName("tag1");
-        Tag tag2 = new Tag();
-        tag2.setName("tag2");
-        Tag tag3 = new Tag();
-        tag3.setName("tag3");
+        Tag tag1 = Tag.builder().name("tag1").build();
+        Tag tag2 = Tag.builder().name("tag2").build();
+        Tag tag3 = Tag.builder().name("tag3").build();
 
         tags = List.of(tag1, tag2, tag3);
     }
 
     @Test
-    public void getAllTags_shouldReturnAllTags() {
+    public void getAllTags_shouldRetrieveAllTags() {
         // Arrange
         String tag1 = "tag1";
         String tag2 = "tag2";
@@ -62,10 +59,7 @@ class TagServiceImplTest {
     @Test
     public void createTags_shouldReturnTagsAfterCreate() {
         // Arrange
-        Set<String> tagNames = new HashSet<>();
-        tagNames.add("tag1");
-        tagNames.add("tag2");
-        tagNames.add("tag3");
+        Set<String> tagNames = Set.of("tag1", "tag2", "tag3");
 
         when(tagRepository.saveAll(any(List.class))).thenReturn(tags);
 
@@ -89,15 +83,12 @@ class TagServiceImplTest {
         tag2.setId(tag2Id);
         List<Tag> tags = List.of(tag1, tag2);
 
-        Set<UUID> tagIds = new HashSet<>();
-        tagIds.add(tag1.getId());
-        tagIds.add(tag2.getId());
+        Set<UUID> tagIds = Set.of(tag1.getId(), tag2.getId());
 
         when(tagRepository.findAllByIdIn(any(Set.class))).thenReturn(tags);
 
         // Act
         List<Tag> result = tagService.getTagsByIds(tagIds);
-
 
         // Assert
         assertThat(result.get(0).getId()).isEqualTo(tag1Id);
@@ -105,11 +96,10 @@ class TagServiceImplTest {
     }
 
     @Test
-    public void getTagById_shouldReturnMatchingTag() {
+    public void getTagById_shouldRetrieveAMatchingTag() {
         // Arrange
         UUID tagId = UUID.randomUUID();
-        Tag tag = new Tag();
-        tag.setId(tagId);
+        Tag tag = Tag.builder().id(tagId).build();
 
         when(tagRepository.findById(any(UUID.class))).thenReturn(Optional.of(tag));
 
@@ -124,24 +114,27 @@ class TagServiceImplTest {
     public void getTagById_shouldThrowEntityNotFoundException() {
         // Arrange
         UUID tagId = UUID.randomUUID();
-        Exception exception = new EntityNotFoundException("There are posts associated with tag: " + tagId);
+        Exception exception = new EntityNotFoundException("Tag not found with id: " + tagId);
         when(tagRepository.findById(any(UUID.class))).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(EntityNotFoundException.class, () -> tagService.getTagById(tagId));
-        assertThat("There are posts associated with tag: " + tagId).isEqualTo(exception.getMessage());
+        assertThat("Tag not found with id: " + tagId).isEqualTo(exception.getMessage());
     }
 
     @Test
-    public void deleteTagById_shouldDeleteTag() {
+    public void deleteTagById_shouldDeleteATag() {
         // Arrange
         UUID tagId = UUID.randomUUID();
-        Tag tag = new Tag();
-        tag.setId(tagId);
+        Tag tag = Tag.builder()
+                .id(tagId)
+                .posts(new ArrayList<>())
+                .build();
 
+        when(tagRepository.findById(any(UUID.class))).thenReturn(Optional.of(tag));
         doNothing().when(tagRepository).deleteById(tagId);
 
-        // Arrange
+        // Act
         tagService.deleteTag(tagId);
 
         // Assert | Verify
@@ -152,11 +145,12 @@ class TagServiceImplTest {
     public void deleteTagById_shouldThrowIllegalStateException() {
         // Arrange
         UUID tagId = UUID.randomUUID();
-        Tag tag = new Tag();
-        tag.setId(tagId);
         Post post = new Post();
         List<Post> posts = List.of(post);
-        tag.setPosts(posts);
+        Tag tag = Tag.builder()
+                .id(tagId)
+                .posts(posts)
+                .build();
 
         Exception exception = new IllegalStateException("There are posts associated with tag: " + tagId);
 

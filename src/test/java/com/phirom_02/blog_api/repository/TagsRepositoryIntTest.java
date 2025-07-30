@@ -18,7 +18,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -56,8 +55,8 @@ class TagsRepositoryIntTest {
         User user = testDataHelper.createUser(null, null);
         Category category = testDataHelper.createCategory("Java");
         savedTag = testDataHelper.createTag("Spring boot");
-        Set<Tag> tags = new HashSet<>();
-        tags.add(savedTag);
+        Set<Tag> tags = Set.of(savedTag);
+
         testDataHelper
                 .createPost(
                         "Test",
@@ -78,8 +77,7 @@ class TagsRepositoryIntTest {
 
     @Test
     public void findAllByNameIn_shouldRetrieveAllWithNameIn() {
-        Set<String> tagNames = new HashSet<>();
-        tagNames.add("Spring boot");
+        Set<String> tagNames = Set.of("Spring boot");
 
         List<Tag> tags = tagRepository.findAllByNameIn(tagNames);
         assertThat(tags.size()).isEqualTo(1);
@@ -89,8 +87,7 @@ class TagsRepositoryIntTest {
     @Test
     public void findAllByIdIn_shouldRetrieveAllWithIdIn() {
         UUID tagId = savedTag.getId();
-        Set<UUID> ids = new HashSet<>();
-        ids.add(tagId);
+        Set<UUID> ids = Set.of(tagId);
         List<Tag> tags = tagRepository.findAllByIdIn(ids);
 
         assertThat(tags.size()).isEqualTo(1);
