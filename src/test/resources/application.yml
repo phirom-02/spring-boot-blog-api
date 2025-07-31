@@ -18,4 +18,4 @@ spring:
 jwt:
   access_token_expiration: 600000
   refresh_token_expiration: 86400000
-  secret: secret-for-testing
+  secret: a2V5MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMw
