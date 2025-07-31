@@ -54,15 +54,15 @@ class CategoryServiceImplIntTest extends IntegrationTest {
     @BeforeEach
     @Rollback
     void setUp() {
-        Category category1 = Category.builder().name("category1").posts(new ArrayList<>()).build();
-        Category category2 = Category.builder().name("category2").posts(new ArrayList<>()).build();
-        Category category3 = Category.builder().name("category3").posts(new ArrayList<>()).build();
-        Category category4 = Category.builder().name("category4").posts(new ArrayList<>()).build();
+        Category category1 = Category.builder().name("category-1").posts(new ArrayList<>()).build();
+        Category category2 = Category.builder().name("category-2").posts(new ArrayList<>()).build();
+        Category category3 = Category.builder().name("category-3").posts(new ArrayList<>()).build();
+        Category category4 = Category.builder().name("category-4").posts(new ArrayList<>()).build();
         List<Category> categories = List.of(category1, category2, category3, category4);
         categoryRepository.saveAll(categories);
 
         User user = testDataHelper.createUser("John Smitht", "john.smith@example.com");
-        Tag tag = testDataHelper.createTag("tagA");
+        Tag tag = testDataHelper.createTag("tag-A");
         Set<Tag> postTags = Set.of(tag);
         testDataHelper.createPost(
                 "test1",
@@ -86,7 +86,7 @@ class CategoryServiceImplIntTest extends IntegrationTest {
     @Test
     public void getCategoryById_shouldRetrieveAMatchingCategory() {
         // Arrange
-        UUID categoryId = testDataHelper.getCategoryByName("category1").getId();
+        UUID categoryId = testDataHelper.getCategoryByName("category-1").getId();
 
         // Act
         Category category = categoryService.getCategoryById(categoryId);
@@ -110,7 +110,7 @@ class CategoryServiceImplIntTest extends IntegrationTest {
     @Rollback
     public void createCategory_shouldReturnACategoryAfterCreate() {
         // Arrange
-        Category categoryToCreate = Category.builder().name("categoryA").posts(new ArrayList<>()).build();
+        Category categoryToCreate = Category.builder().name("category-A").posts(new ArrayList<>()).build();
 
         // Act
         Category category = categoryService.createCategory(categoryToCreate);
@@ -122,7 +122,7 @@ class CategoryServiceImplIntTest extends IntegrationTest {
     @Test
     public void createCategory_shouldThrowsIllegalArgumentException() {
         // Arrange
-        String categoryName = "category1";
+        String categoryName = "category-1";
         Category categoryToCreate = Category.builder().name(categoryName).posts(new ArrayList<>()).build();
         Exception exception = new IllegalArgumentException("Category name already exists: " + categoryName);
 
@@ -135,7 +135,7 @@ class CategoryServiceImplIntTest extends IntegrationTest {
     @Rollback
     public void deleteCategory_shouldDeleteACategory() {
         // Arrange
-        UUID categoryId = testDataHelper.getCategoryByName("category2").getId();
+        UUID categoryId = testDataHelper.getCategoryByName("category-2").getId();
 
         // Act
         categoryService.deleteCategory(categoryId);
@@ -145,14 +145,13 @@ class CategoryServiceImplIntTest extends IntegrationTest {
     }
 
     @Test
-    public void deleteTagById_shouldThrowIllegalStateException() {
+    public void deleteCategory_shouldThrowIllegalStateException() {
         // Arrange
-        UUID categoryId = testDataHelper.getCategoryByName("category1").getId();
+        UUID categoryId = testDataHelper.getCategoryByName("category-1").getId();
         Exception exception = new IllegalStateException("There are posts associated with category: " + categoryId);
 
         // Act & Assert
         assertThrows(IllegalStateException.class, () -> categoryService.deleteCategory(categoryId));
         assertThat("There are posts associated with category: " + categoryId).isEqualTo(exception.getMessage());
-
     }
 }

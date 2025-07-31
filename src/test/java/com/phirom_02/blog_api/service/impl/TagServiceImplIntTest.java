@@ -50,14 +50,14 @@ class TagServiceImplIntTest extends IntegrationTest {
     @BeforeEach
     @Rollback
     void setUp() {
-        Tag tag1 = Tag.builder().name("tag1").posts(new ArrayList<>()).build();
-        Tag tag2 = Tag.builder().name("tag2").posts(new ArrayList<>()).build();
-        Tag tag3 = Tag.builder().name("tag3").posts(new ArrayList<>()).build();
-        Tag tag4 = Tag.builder().name("tag4").posts(new ArrayList<>()).build();
+        Tag tag2 = Tag.builder().name("tag-1").posts(new ArrayList<>()).build();
+        Tag tag1 = Tag.builder().name("tag-2").posts(new ArrayList<>()).build();
+        Tag tag3 = Tag.builder().name("tag-3").posts(new ArrayList<>()).build();
+        Tag tag4 = Tag.builder().name("tag-4").posts(new ArrayList<>()).build();
         List<Tag> tags = List.of(tag1, tag2, tag3, tag4);
         tagRepository.saveAll(tags);
 
-        User user = testDataHelper.createUser("John Smitht", "john.smith@example.com");
+        User user = testDataHelper.createUser("John Smith", "john.smith@example.com");
         Category category = testDataHelper.createCategory("Test Category");
 
         Set<Tag> postTags = Set.of(tag1, tag2);
@@ -96,8 +96,8 @@ class TagServiceImplIntTest extends IntegrationTest {
     @Test
     void getTagsByIds_shouldRetrieveMatchingTags() {
         // Arrange
-        UUID tagId1 = testDataHelper.getTagByName("tag1").getId();
-        UUID tagId2 = testDataHelper.getTagByName("tag2").getId();
+        UUID tagId1 = testDataHelper.getTagByName("tag-1").getId();
+        UUID tagId2 = testDataHelper.getTagByName("tag-2").getId();
         Set<UUID> tagIds = Set.of(tagId1, tagId2);
 
         // Act
@@ -110,7 +110,7 @@ class TagServiceImplIntTest extends IntegrationTest {
     @Test
     void getTagById_shouldRetrieveAMatchingTag() {
         // Arrange
-        UUID tagId = testDataHelper.getTagByName("tag1").getId();
+        UUID tagId = testDataHelper.getTagByName("tag-1").getId();
 
         // Act
         Tag tag = tagService.getTagById(tagId);
@@ -134,7 +134,7 @@ class TagServiceImplIntTest extends IntegrationTest {
     @Rollback
     public void deleteTagById_shouldDeleteTag() {
         // Arrange
-        UUID tagId = testDataHelper.getTagByName("tag3").getId();
+        UUID tagId = testDataHelper.getTagByName("tag-3").getId();
 
         // Act
         tagService.deleteTag(tagId);
@@ -146,7 +146,7 @@ class TagServiceImplIntTest extends IntegrationTest {
     @Test
     public void deleteTagById_shouldThrowIllegalStateException() {
         // Arrange
-        UUID tagId = testDataHelper.getTagByName("tag1").getId();
+        UUID tagId = testDataHelper.getTagByName("tag-1").getId();
         Exception exception = new IllegalStateException("There are posts associated with tag: " + tagId);
 
         // Act & Assert
