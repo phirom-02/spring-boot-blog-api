@@ -1,28 +1,35 @@
 package com.phirom_02.blog_api.repository;
 
 import com.phirom_02.blog_api.IntegrationTest;
+import com.phirom_02.blog_api.domain.entities.User;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.test.annotation.Rollback;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Testcontainers
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@Transactional
+@Transactional
 class UserRepositoryIntTest extends IntegrationTest {
 
     @Container
     @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16:9");
 
-//    @Autowired
-//    private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Test
     void connectionEstablished() {
@@ -30,22 +37,22 @@ class UserRepositoryIntTest extends IntegrationTest {
         assertThat(postgres.isRunning()).isTrue();
     }
 
-//    @BeforeEach
-//    @Rollback
-//    void setUp() {
-//        User user = new User();
-//        user.setEmail("john.smith@example.com");
-//        user.setPassword("password");
-//        user.setName("John Smith");
-//        userRepository.save(user);
-//    }
-//
-//    @Test
-//    public void findByEmail_shouldRetrieveUserByEmail() {
-//        String email = "john.smith@example.com";
-//        Optional<User> user = userRepository.findByEmail(email);
-//        assertThat(user).isPresent();
-//        assertThat(user.get().getEmail()).isEqualTo(email);
-//
-//    }
+    @BeforeEach
+    @Rollback
+    void setUp() {
+        User user = new User();
+        user.setEmail("john.smith@example.com");
+        user.setPassword("password");
+        user.setName("John Smith");
+        userRepository.save(user);
+    }
+
+    @Test
+    public void findByEmail_shouldRetrieveUserByEmail() {
+        String email = "john.smith@example.com";
+        Optional<User> user = userRepository.findByEmail(email);
+        assertThat(user).isPresent();
+        assertThat(user.get().getEmail()).isEqualTo(email);
+
+    }
 }
