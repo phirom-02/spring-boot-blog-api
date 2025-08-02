@@ -1,9 +1,6 @@
 package com.phirom_02.blog_api.controllers;
 
-import com.phirom_02.blog_api.domain.dtos.AuthResponse;
-import com.phirom_02.blog_api.domain.dtos.LoginPayload;
-import com.phirom_02.blog_api.domain.dtos.SignUpDto;
-import com.phirom_02.blog_api.domain.dtos.SignUpPayload;
+import com.phirom_02.blog_api.domain.dtos.*;
 import com.phirom_02.blog_api.mappers.AuthMapper;
 import com.phirom_02.blog_api.service.AuthService;
 import com.phirom_02.blog_api.swagger.SwaggerTag;
@@ -67,14 +64,17 @@ public class AuthController {
      * @return a {@link ResponseEntity} containing the {@link UserDetails} of the newly registered user
      */
     @PostMapping("/sign-up")
-    public ResponseEntity<UserDetails> signUp(@RequestBody @Valid SignUpPayload payload) {
+    public ResponseEntity<SignUpResponse> signUp(@RequestBody @Valid SignUpPayload payload) {
         // Convert the sign-up payload to a DTO
         SignUpDto dto = authMapper.toSignUpDto(payload);
 
         // Register the user and retrieve their details
         UserDetails userDetails = authService.register(dto);
 
-        // Return the user details in the response
-        return ResponseEntity.ok(userDetails);
+        // Map the user details to  sign-up response
+        SignUpResponse signUpResponse = authMapper.userDetailsToSignUpResponse(userDetails);
+
+        // Return sign-up response
+        return ResponseEntity.ok(signUpResponse);
     }
 }

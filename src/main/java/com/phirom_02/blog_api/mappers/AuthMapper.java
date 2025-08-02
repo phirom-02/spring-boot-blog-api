@@ -3,8 +3,12 @@ package com.phirom_02.blog_api.mappers;
 import com.phirom_02.blog_api.domain.dtos.CreateUserDto;
 import com.phirom_02.blog_api.domain.dtos.SignUpDto;
 import com.phirom_02.blog_api.domain.dtos.SignUpPayload;
+import com.phirom_02.blog_api.domain.dtos.SignUpResponse;
+import com.phirom_02.blog_api.domain.entities.User;
+import com.phirom_02.blog_api.security.BlogUserDetails;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Mapper interface for converting between various authentication-related data objects.
@@ -29,4 +33,20 @@ public interface AuthMapper {
      * @return the corresponding {@link CreateUserDto}
      */
     CreateUserDto toCreateUserDto(SignUpDto signUpDto);
+
+    /**
+     * Map a {@link UserDetails} to a {@link SignUpResponse}.
+     *
+     * @param userDetails the signed-up information of a new user
+     * @return the corresponding {@link SignUpResponse}
+     */
+    default SignUpResponse userDetailsToSignUpResponse(UserDetails userDetails) {
+        User user = ((BlogUserDetails) userDetails).getUser();
+
+        return SignUpResponse.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .name(user.getName())
+                .build();
+    }
 }
