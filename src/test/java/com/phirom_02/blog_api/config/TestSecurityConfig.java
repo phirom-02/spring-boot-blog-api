@@ -39,6 +39,7 @@ public class TestSecurityConfig {
         http.authorizeHttpRequests(auth ->
                         auth.requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                                 .requestMatchers("*", "/api/v1/posts/**").permitAll()
+                                .requestMatchers("*", "/api/v1/posts/drafts").authenticated()
                                 .requestMatchers("*", "/api/v1/categories/**").permitAll()
                                 .requestMatchers("*", "/api/v1/tags/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()

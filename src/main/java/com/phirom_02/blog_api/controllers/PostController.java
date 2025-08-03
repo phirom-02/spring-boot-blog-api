@@ -43,7 +43,7 @@ public class PostController {
      * @return a {@link ResponseEntity} containing a list of {@link PostResponse} objects and HTTP status 200 (OK)
      */
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getAllPost(
+    public ResponseEntity<List<PostResponse>> getAllPosts(
             @RequestParam(required = false) UUID categoryId,
             @RequestParam(required = false) UUID tagId
     ) {
