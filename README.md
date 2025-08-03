@@ -156,9 +156,9 @@ After running the project, you can access the docs at:
     - [ ] Add account verification (e.g., email confirmation)
     - [ ] Implement RBAC (Role-Based Access Control)
 
-- [ ] **Add testing**
-    - [ ] Unit tests for services and utils
-    - [ ] Integration tests for API endpoints
+- [x] **Add testing**
+    - [x] Unit tests for services and utils
+    - [x] Integration tests for API endpoints
 
 - [x] **Improve documentation**
     - [x] Add Swagger/OpenAPI annotations
