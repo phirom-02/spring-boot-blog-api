@@ -10,6 +10,7 @@ import com.phirom_02.blog_api.repository.PostRepository;
 import com.phirom_02.blog_api.repository.TagRepository;
 import com.phirom_02.blog_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,9 +25,10 @@ public class TestDataHelper {
     private final CategoryRepository categoryRepository;
     private final PostRepository postRepository;
     private final TagRepository tagRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User createUser(String name, String email) {
-        return userRepository.save(User.builder().email(email != null ? email : "john.smith@example.com").name(name != null ? name : "John Smith").password("@#password").build());
+        return userRepository.save(User.builder().email(email != null ? email : "john.smith@example.com").name(name != null ? name : "John Smith").password(passwordEncoder.encode("@#password")).build());
     }
 
     public Category createCategory(String name) {
@@ -47,7 +49,6 @@ public class TestDataHelper {
 
     public Post createPost(String title, String content, PostStatus status, User author, Category category, Set<Tag> tags) {
         Post post = Post.builder().title(title).content(content).status(status != null ? status : PostStatus.PUBLISHED).readingTime(5).author(author).category(category).tags(tags).build();
-
 
         for (Tag tag : tags) {
             tag.getPosts().add(post);

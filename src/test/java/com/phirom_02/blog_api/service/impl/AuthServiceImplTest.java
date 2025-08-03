@@ -16,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,10 +37,6 @@ class AuthServiceImplTest {
     private JwtService jwtService;
     @Mock
     private AuthMapper authMapper;
-    @Mock
-    private PasswordEncoder passwordEncoder;
-
-    private Long accessTokenExpiration = 60000L;
 
     @Test
     public void register_shouldReturnUserDetailsAfterCreate() {
@@ -67,7 +62,6 @@ class AuthServiceImplTest {
 
 
         when(authMapper.toCreateUserDto(signUpDto)).thenReturn(createUserDto);
-        when(passwordEncoder.encode("#@password")).thenReturn("encodedPassword");
         when(userService.createUser(createUserDto)).thenReturn(user);
 
         // Act

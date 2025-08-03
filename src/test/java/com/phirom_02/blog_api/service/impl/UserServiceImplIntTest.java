@@ -18,7 +18,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -46,26 +45,9 @@ class UserServiceImplIntTest extends IntegrationTest {
     @BeforeEach
     @Rollback
     void setUp() {
-        User userA = User.builder()
-                .name("user A")
-                .email("user.a@example.com")
-                .password("@#password")
-                .build();
-
-        User userB = User.builder()
-                .name("user B")
-                .email("user.b@example.com")
-                .password("@#password")
-                .build();
-
-        User userC = User.builder()
-                .name("user C")
-                .email("userr.b@example.com")
-                .password("@#password")
-                .build();
-
-        List<User> users = List.of(userA, userB, userC);
-        userRepository.saveAll(users);
+        testDataHelper.createUser("user A", "user.a@example.com");
+        testDataHelper.createUser("user B", "user.b@example.com");
+        testDataHelper.createUser("user C", "user.c@example.com");
     }
 
     @Test
@@ -92,6 +74,7 @@ class UserServiceImplIntTest extends IntegrationTest {
     }
 
     @Test
+    @Rollback
     public void createUser_shouldReturnUserAfterCreate() {
         // Arrange
         CreateUserDto dto = CreateUserDto.builder()
@@ -106,6 +89,5 @@ class UserServiceImplIntTest extends IntegrationTest {
         // Assert
         assertThat(result.getName()).isEqualTo(dto.getName());
         assertThat(result.getEmail()).isEqualTo(dto.getEmail());
-        assertThat(result.getPassword()).isEqualTo(dto.getPassword());
     }
 }

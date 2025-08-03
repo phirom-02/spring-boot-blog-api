@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +28,9 @@ class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     private User user;
 
@@ -76,11 +80,12 @@ class UserServiceImplTest {
                 .email("new.user@example.com")
                 .password("@#password")
                 .build();
+        when(passwordEncoder.encode("@#password")).thenReturn("encodedPassword");
 
         User user = User.builder()
                 .name("new user")
                 .email("new.user@example.com")
-                .password("@#password")
+                .password(passwordEncoder.encode("@#password"))
                 .build();
 
         when(userRepository.save(any(User.class))).thenReturn(user);
@@ -91,6 +96,6 @@ class UserServiceImplTest {
         // Assert
         assertThat(result.getName()).isEqualTo(dto.getName());
         assertThat(result.getEmail()).isEqualTo(dto.getEmail());
-        assertThat(result.getPassword()).isEqualTo(dto.getPassword());
+        assertThat(result.getPassword()).isEqualTo("encodedPassword");
     }
 }

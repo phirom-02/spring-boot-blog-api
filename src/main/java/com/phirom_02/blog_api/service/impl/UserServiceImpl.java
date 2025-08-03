@@ -6,6 +6,7 @@ import com.phirom_02.blog_api.repository.UserRepository;
 import com.phirom_02.blog_api.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Finds a user by their unique identifier.
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
         // TODO: Throw duplication email
         User userToCreate = new User();
         userToCreate.setEmail(dto.getEmail());
-        userToCreate.setPassword(dto.getPassword());
+        userToCreate.setPassword(passwordEncoder.encode(dto.getPassword())); // Encrypting password
         userToCreate.setName(dto.getName());
 
         return userRepository.save(userToCreate);
