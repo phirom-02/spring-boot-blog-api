@@ -52,7 +52,7 @@ public class TagController {
      * and HTTP status 201 (Created)
      */
     @PostMapping
-    public ResponseEntity<List<TagResponse>> createTag(@RequestBody @Valid CreateTagPayload payload) {
+    public ResponseEntity<List<TagResponse>> createTags(@RequestBody @Valid CreateTagPayload payload) {
         List<Tag> createdTags = tagService.createTags(payload.getNames());
         List<TagResponse> createdTagsResponse = createdTags.stream()
                 .map(tagMapper::toResponseTag)
