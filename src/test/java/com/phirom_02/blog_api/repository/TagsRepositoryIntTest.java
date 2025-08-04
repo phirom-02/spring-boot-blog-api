@@ -1,5 +1,6 @@
 package com.phirom_02.blog_api.repository;
 
+import com.phirom_02.blog_api.IntegrationTest;
 import com.phirom_02.blog_api.domain.entities.Tag;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-class TagsRepositoryIntTest {
+class TagsRepositoryIntTest extends IntegrationTest {
 
     @Container
     @ServiceConnection
